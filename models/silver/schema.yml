@@ -1,13 +1,8 @@
 version: 2
 
 sources:
-
-    - name: source
-
-      database: WALMART_DB
-
-      schema: BRONZE
-
-      tables:
-
-        - name: WORK_DEPARTMENT_STAGE
+  - name: source
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: WORK_DEPARTMENT_STAGE

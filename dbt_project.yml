@@ -56,15 +56,18 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   venkat_dbt_project:
-    # Applies to all files under models/example/
-    example:
-      schema: example
-    gold:
-        schema: gold
-        materialised: view
+    bronze:
+      database: WALMART_DB
+      schema: BRONZE
+      materialized: table
     silver:
-        schema: silver
-        materialised: table
+      database: WALMART_DB
+      schema: SILVER
+      materialized: table
+    gold:
+      database: WALMART_DB
+      schema: GOLD
+      materialized: view
 
 
 # models:
