@@ -69,3 +69,18 @@ sources:
     schema: PUBLIC
     tables:
       - name: PATIENT_SRC
+  - name: DEPT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: WORK_DEPARTMENT_STAGE
+  - name: STORE
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: STORE_STAGE
+  - name: FACT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: FACT_DATA

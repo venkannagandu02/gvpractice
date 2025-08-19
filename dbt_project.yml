@@ -68,7 +68,21 @@ models:
       database: WALMART_DB
       schema: GOLD
       materialized: view
-
+    - name: DEPT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: WORK_DEPARTMENT_STAGE
+  - name: STORE
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: STORE_STAGE
+  - name: FACT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: FACT_DATA
 
 # models:
 #   my_new_project:
