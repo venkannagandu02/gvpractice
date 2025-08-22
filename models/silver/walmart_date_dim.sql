@@ -1,10 +1,12 @@
-{{ 
+{{
     config(
         materialized='incremental',
         incremental_strategy='merge',
         unique_key='date_id',
-        merge_exclude_columns=['insert_date']
-    ) 
+        merge_exclude_columns=['insert_date'],
+        pre_hook=macros_copy_csv('WORK_DEPARTMENT_STAGE'),
+        schema='SILVER'
+    )
 }}
 
 with base as (
