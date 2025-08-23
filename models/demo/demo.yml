@@ -84,3 +84,11 @@ sources:
     schema: BRONZE
     tables:
       - name: FACT_DATA
+
+  - name: bronze
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: work_department_stage
+      - name: fact_data
+      - name: store_stage

@@ -4,7 +4,11 @@
         incremental_strategy='merge',
         unique_key='date_id',
         merge_exclude_columns=['insert_date'],
-        pre_hook=macros_copy_csv('WORK_DEPARTMENT_STAGE'),
+        pre_hook=[
+            copy_department_csv(),
+            copy_fact_data_csv(),
+            copy_store_stage_csv()
+        ],
         schema='SILVER'
     )
 }}
@@ -13,17 +17,17 @@ with base as (
 
     -- Pull distinct dates from Department Stage
     select distinct
-        s.sales_date as store_date,
-        case when s.is_holiday = TRUE then 'Y' else 'N' end as is_holiday
-    from {{ source('DEPT','WORK_DEPARTMENT_STAGE') }} s
+        s.SALES_DATE as store_date,
+        case when s.IS_HOLIDAY = TRUE then 'Y' else 'N' end as is_holiday
+    from {{ source('bronze', 'work_department_stage') }} s
 
     union distinct
 
     -- Pull distinct dates from Fact Data
     select distinct
-        f.sales_date as store_date,
-        case when f.isHoliday = TRUE then 'Y' else 'N' end as is_holiday
-    from {{ source('FACT','FACT_DATA') }} f
+        f.SALES_DATE as store_date,
+        case when f.ISHOLIDAY = TRUE then 'Y' else 'N' end as is_holiday
+    from {{ source('bronze', 'fact_data') }} f
 ),
 
 with_ids as (
@@ -37,13 +41,13 @@ with_ids as (
 )
 
 select *
-from with_ids
+from with_ids w
 
 {% if is_incremental() %}
   where not exists (
         select 1
         from {{ this }} t
-        where t.store_date = with_ids.store_date
-          and t.is_holiday = with_ids.is_holiday
+        where t.store_date = w.store_date
+          and t.is_holiday = w.is_holiday
   )
 {% endif %}
