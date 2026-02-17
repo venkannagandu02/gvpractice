@@ -1,0 +1,94 @@
+version: 2
+
+models:
+  - name: employee
+    description: "DBT Model for employee table"
+    columns:
+      - name: emp_id
+        tests:
+          - unique
+          - not_null
+          - accepted_values:
+              values: ['1','2','3','4','5']
+              config:
+                severity: warn
+      - name: emp_salary
+        tests:
+          - value_check
+  - name: customer
+    description: "DBT Model for the customer table"
+  - name: customer_vw
+    description: "DBT model for the customer view"
+  - name: sales
+    description: :DBT Model for the sales table"
+  - name: product
+    description: "DBT Model for the product table"
+  - name: purchase
+    description: "DBT Model for the purchase table"
+  - name: clean_orders
+    description: "DBT Model for the clean Orders"
+  - name: final_order
+    description: "DBT Model for the final orders"
+    
+
+   
+  
+sources:
+  - name: employee
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: EMPLOYEE_RAW
+  - name: customer
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: CUSTOMER_SRC
+  - name: sales
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: SALES_SRC
+  - name: product
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: PRODUCT_SRC
+  - name: purchase
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: PURCHASE_SRC
+  - name: orders
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: BASE_ORDERS
+  - name: patient
+    database: WALMART_DB
+    schema: PUBLIC
+    tables:
+      - name: PATIENT_SRC
+  - name: DEPT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: WORK_DEPARTMENT_STAGE
+  - name: STORE
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: STORE_STAGE
+  - name: FACT
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: FACT_DATA
+
+  - name: bronze
+    database: WALMART_DB
+    schema: BRONZE
+    tables:
+      - name: work_department_stage
+      - name: fact_data
+      - name: store_stage
